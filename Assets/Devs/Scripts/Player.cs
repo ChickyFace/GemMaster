@@ -160,7 +160,7 @@ public class Player : MonoBehaviour
         
         Vector3 gemReSpawnOffset = new Vector3(0f, gridManager.floatGridSize.x / 4, 0f);
         //Debug.Log(gemReSpawnOffset);
-
+        //gem tekrar çağırıldığında offseti bir daha eklemesin diye çıkarttık.
         StartCoroutine(gridManager.SpawnGemWithDelay((gemReSpawn.position- gemReSpawnOffset), gemReSpawnOffset));
 
 
