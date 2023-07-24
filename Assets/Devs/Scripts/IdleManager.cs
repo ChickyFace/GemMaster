@@ -154,7 +154,7 @@ public class IdleManager : MonoBehaviour
 
             var gemData = gatheredGems[i];
             int gemLayerIndex = gemData.gemLayerIndex;
-            float xScaleOfInitialGem = gemData.xScaleOfInitialGem * / 0.33f; //0.33 gemlerin max scale'i, yüzde oranlamak için böldüm.
+            float xScaleOfInitialGem = gemData.xScaleOfInitialGem / 0.33f; //0.33 gemlerin max scale'i, yüzde oranlamak için böldüm.
             
             if (gemLayerIndex == LayerMask.NameToLayer("Pink"))
             {
