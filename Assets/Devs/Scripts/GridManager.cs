@@ -9,38 +9,29 @@ using UnityEngine.UIElements;
 
 public class GridManager : MonoBehaviour
 {
-    //public GameObject[] gridPrefabs; for random color grid genarate
-    public GameObject DefaultGrid;
     
-    //private Player playerCs;
-
-    //[SerializeField] private LayerMask[] gridLayerMasks;
+    public GameObject DefaultGrid;
 
     public GameObject[] gemPrefabs;
-    //public GameObject GreenGem;
-    //public GameObject YellowGem;
-    //public GameObject PinkGem;
 
     private Tweener spawnScaleTween;
 
-    public Vector3 floatGridSize;
+    // grid ve gemlerin size oranı ve offset icin
+    public Vector3 floatGridSize; 
+
+
 
     public float minSpawnDelay = 1f;
     public float maxSpawnDelay = 5f;
 
-    public Vector3 tilePosition2;
 
-    //long PinkGemBB = 0;
-    //long YellowGemBB = 0;
-    //long GreenGemBB = 0;
-
+    //GridTile içinde oluştuıulacak NxM grid sayısı
     public int N;
     public int M;
 
     void Start()
     {
         GenerateTile();
-        //playerCs = FindObjectOfType<Player>();
     }
     private void GenerateTile()
     {
@@ -66,53 +57,7 @@ public class GridManager : MonoBehaviour
 
                 Vector3 gemOffset = new Vector3(0f, floatGridSize.x / 4, 0f);
                 StartCoroutine(SpawnGemWithDelay((tile.transform.position), gemOffset));
-
-
-                /*if (LayerMask.LayerToName(tile.layer) == "Pink")
-                {
-                    //PinkGemBB = SetGridState(PinkGemBB, r, M, c); BitBoards of Grids
-                    //PrintBB("PinkGem", PinkGemBB);
-
-                    // Set the initial scale of the GreenGem to zero before animating it to the desired size using DOTween.
-                    PinkGem.transform.localScale = Vector3.zero;
-
-                    // Instantiate your object at the generated tile position.
-                    Vector3 objectOffset = new Vector3(0f, 1f, 0f); // Adjust the offset for your object's desired position relative to the tile.
-                    GameObject newObject = Instantiate(PinkGem, tilePosition + objectOffset, Quaternion.identity);
-
-                    // Use DOTween to animate the scale of the GreenGem from zero to the desired size over the specified duration.
-                    float duration = 5.0f; // You can adjust the duration as needed.
-                    newObject.transform.DOScale(Vector3.one, duration);
-                }
-                else if (LayerMask.LayerToName(tile.layer) == "Green")
-                {
-                    // Set the initial scale of the GreenGem to zero before animating it to the desired size using DOTween.
-                    GreenGem.transform.localScale = Vector3.zero;
-
-                    // Instantiate your object at the generated tile position.
-                    Vector3 objectOffset = new Vector3(0f, 1f, 0f); // Adjust the offset for your object's desired position relative to the tile.
-                    GameObject newObject = Instantiate(GreenGem, tilePosition + objectOffset, Quaternion.identity);
-
-                    // Use DOTween to animate the scale of the GreenGem from zero to the desired size over the specified duration.
-                    float duration = 5.0f; // You can adjust the duration as needed.
-                    newObject.transform.DOScale(Vector3.one, duration);
-
-                }
-                else if (LayerMask.LayerToName(tile.layer) == "Yellow")
-                {
-
-                    // Set the initial scale of the GreenGem to zero before animating it to the desired size using DOTween.
-                    YellowGem.transform.localScale = Vector3.zero;
-
-                    // Instantiate your object at the generated tile position.
-                    Vector3 objectOffset = new Vector3(0f, 1f, 0f); // Adjust the offset for your object's desired position relative to the tile.
-                    GameObject newObject = Instantiate(YellowGem, tilePosition + objectOffset, Quaternion.identity);
-
-                    // Use DOTween to animate the scale of the GreenGem from zero to the desired size over the specified duration.
-                    float duration = 5.0f; // You can adjust the duration as needed.
-                    newObject.transform.DOScale(Vector3.one, duration);
-
-                }*/ // instantiate gem at same color tile accordingly Grid Layer
+                
             }
         }
     }
@@ -144,6 +89,8 @@ public class GridManager : MonoBehaviour
         spawnScaleTween = gemObject.transform.DOScale(GemSize, scalingDuration).OnUpdate(() =>
         {
 
+            //Case de gemler 0.25 den sonra alınabilir olsun dediği için 1- 0.25 oranını kullandım, büyüyecekleri max noktanın 1/4'ünde colliderları aktif oluyor
+
             if (gemObject.transform.localScale.x >= GemSize.x / 4 &&
                 gemObject.transform.localScale.y >= GemSize.y / 4 &&
                 gemObject.transform.localScale.z >= GemSize.z / 4)
@@ -159,24 +106,6 @@ public class GridManager : MonoBehaviour
 
         });
     }
-    /* void PrintBB(string name, long BB)
-     {
-         Debug.Log(name + ":" + Convert.ToString(BB, 2).PadLeft(64, '0'));
-     }*/ // pringting grids bitboard binary numbers
-
-    /*long SetGridState(long bitboard, int row, int width, int col)
-    {
-
-        long newBit = 1L << (row * width + col);
-        return (bitboard |= newBit);
-    } */  // Settint with bitshifting grid's states
-
-    /* bool GetGridState(long bitboard, int row, int width, int col)
-     {
-         long mask = 1L << (row * width + col);
-         return ((bitboard & mask) != 0);
-     }*/ // Get GridState bool*/
-
-    
+ 
 
 }

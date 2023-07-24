@@ -11,43 +11,24 @@ public class IdleManager : MonoBehaviour
 {
     //public Player player;
 
-
-
-
-    private float wallet;
-
-
-    //public LayerMask pink;
-    //public LayerMask yellow;
-    //public LayerMask green;
-
-
-
-    //public int gemLayerIndex;
     // Properties to store gemLayerIndex and xScaleOfInitialGem
-    public int GemLayerIndex { get; private set; }
-    public float XScaleOfInitialGem { get; private set; }
+    //public int GemLayerIndex { get; private set; }
+    //public float XScaleOfInitialGem { get; private set; }
 
+
+   
+
+   
 
     [HideInInspector]
     public int _yellowGemCount;
-
     [HideInInspector]
     public int _pinkGemCount;
     [HideInInspector]
     public int _greenGemCount;
-
-
-    private int greenLayerIndex;
-    private int yellowLayerIndex;
-    private int pinkLayerIndex;
-
-    
-    public float time;
-
-
     [HideInInspector]
     public float xScaleOfInitialGem;
+    private float wallet;
 
 
 
@@ -56,20 +37,22 @@ public class IdleManager : MonoBehaviour
     public float initialPinkGemCost;
 
 
+
+    //ui
     public GameObject PopUpScreen;
     public Button GemsButton;
-
-
 
     public TextMeshProUGUI greenGemCountText;
     public TextMeshProUGUI yellowGemCountText;
     public TextMeshProUGUI pinkGemCountText;
-
     public TextMeshProUGUI Wallet;
 
 
-
+    
     public static IdleManager instance;
+
+
+    //sayılırken alandan cıkınca sayım duruyor girince kaldıgı yerden devam ediyor.
     private bool isCounting = false;
 
 
@@ -143,9 +126,6 @@ public class IdleManager : MonoBehaviour
         GemData gemData = new GemData(gemLayerIndex, xScaleOfInitialGem);
         gatheredGems.Add(gemData);
         
-        //GemLayerIndex = gemLayerIndex;
-
-        //XScaleOfInitialGem = xScaleOfInitialGem;
 
     }
 
@@ -174,7 +154,7 @@ public class IdleManager : MonoBehaviour
 
             var gemData = gatheredGems[i];
             int gemLayerIndex = gemData.gemLayerIndex;
-            float xScaleOfInitialGem = gemData.xScaleOfInitialGem;
+            float xScaleOfInitialGem = gemData.xScaleOfInitialGem * / 0.33f; //0.33 gemlerin max scale'i, yüzde oranlamak için böldüm.
             
             if (gemLayerIndex == LayerMask.NameToLayer("Pink"))
             {
@@ -208,7 +188,7 @@ public class IdleManager : MonoBehaviour
     public void GetGemMoneyAndCount()
     {
        StartCoroutine(ProcessGatheredGems());
-        UpdateTexts();
+       UpdateTexts();
     }
 
     //public void GetGemMoneyAndCount()
@@ -368,11 +348,5 @@ public class IdleManager : MonoBehaviour
             //    PlayerPrefs.SetInt("YellowGemCount", _yellowGemCount);
 
             //}*/
-
-
-
-
-
-
 
 }

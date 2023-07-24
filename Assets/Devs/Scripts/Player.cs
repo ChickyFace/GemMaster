@@ -6,26 +6,15 @@ using Unity.VisualScripting;
 
 public class Player : MonoBehaviour
 {
-
-    private BoxCollider playerColl;
-
-
-    
-
+    //player
+    public Transform player;
     //for movement
     [SerializeField] private float moveSpeed;
     [SerializeField] private GameInput gameInput;
     [SerializeField] private FixedJoystick fixedJoystick;
 
-    
-    //public Vector3 lastGemScale;
-
-    private bool isWalking;
-    private bool isMovingToKuyumcu = false;
-    //public bool isRegenerating = false;
-
-
-    public Transform player;
+    private bool isWalking; //animasyon için
+    private bool isMovingToKuyumcu = false; // kutuya gemleri atarken trigger exit ve enter da durdurmak için
 
 
 
@@ -34,23 +23,14 @@ public class Player : MonoBehaviour
     private Tweener movingBackScaleTween;
     private Transform gemReSpawn;
 
-    //public Vector3 gemInitialScale;
-    //private Tweener spawnScaleTween;
-
-    //to IdleManager
-    //public int gemLayers;
-
     //Offsetler ve transform
     public LayerMask interactableLayer;
-    //public LayerMask pinkGemLayer;
-    //public LayerMask greenGemLayer;
-    //public LayerMask yellowGemLayer;
     public float stackOffset ;
     public float stackOffsetkasa ;
     public Transform backpack;
     public Transform kasa;
     private List<Transform> gatheredObjects = new List<Transform>();
-    //private int gemStackCount;
+
 
     void Update()
     {
@@ -101,18 +81,12 @@ public class Player : MonoBehaviour
         {
 
            
-
+            //İdle list edilen data burdan gidiyor
             other.gameObject.GetComponent<Collider>().enabled = false;
             gemReSpawn = other.transform;
             IdleManager.instance.SetGemData(other.gameObject.layer, gemReSpawn.localScale.x);
             
-            
-            //IdleManager.instance.XScaleOfInitialGem = gemReSpawn.localScale.x;
-            //IdleManager.instance.SetGemData(targetObject.gameObject.layer, targetObject.localScale.x)
-            // IdleManager.instance.xScaleOfInitialGem = gemReSpawn.localScale.x;
-
-            //Debug.Log("Gem giris transform u" + gemReSpawn.localScale); ;
-
+          
             // Move the other object to the backpack
             MoveToBackpack(other.transform);
             
@@ -205,8 +179,8 @@ public class Player : MonoBehaviour
 
         int a = gatheredObjects.Count;
 
-        int b = kasa.childCount -3;
-        //Debug.Log(kasa.childCount - 3);
+        int b = kasa.childCount -3; 
+        //kasanın üstüne atarken offset icin
         
 
         Vector3 kasaPosition = kasa.localPosition;
@@ -239,28 +213,11 @@ public class Player : MonoBehaviour
             ).OnComplete(() =>
             {
 
-
-                
-               
                 IdleManager.instance.GetGemMoneyAndCount();
-                //if (IsGreenGem(child))
-                //{
-                //    IdleManager.instance._greenGemCount = child.gameObject.layer;
-                //    return;
-                //}
-
-                //if (((1 << other.gameObject.layer) & interactableLayer) != 0)
-                //{
-                //}
-                //if (((1 << other.gameObject.layer) & ) != 0)
-                //{
-                //}
-
-
+            
                 //IdleManager.
                 //para verecek 
                 //gem count artacak
-
 
             });
 

@@ -23,14 +23,4 @@ public class PlayerAnimator : MonoBehaviour
 
     }
 
-
-
-
-
-
-
-
-
-
-
 }
