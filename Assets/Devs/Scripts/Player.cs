@@ -267,7 +267,7 @@ public class Player : MonoBehaviour
             gatheredObjects.RemoveAt(i);
 
             // Wait for a short delay before moving the next object
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(0.2f);
         }
 
        
