@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7567084023108261951
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2885183330380907471}
+  - component: {fileID: 627883805881546880}
+  m_Layer: 0
+  m_Name: GridTile
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2885183330380907471
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7567084023108261951}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &627883805881546880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7567084023108261951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4536bf2c9559ce142be34fda4f5623e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultGrid: {fileID: 625929702025639126, guid: 3b8195f055d59fe4e95ba054dc230fa4, type: 3}
+  gridLayerMasks:
+  - serializedVersion: 2
+    m_Bits: 64
+  - serializedVersion: 2
+    m_Bits: 128
+  - serializedVersion: 2
+    m_Bits: 256
+  gemPrefabs:
+  - {fileID: 3888075289088131365, guid: f5495d2889450ae41a225cf9c6e0d198, type: 3}
+  - {fileID: 6970907792455268899, guid: afd92fe3ee59f6741aa5652aa0728e68, type: 3}
+  - {fileID: 950635419605738633, guid: e0b04bed6958ebf499c95e73de8932a1, type: 3}
+  GreenGem: {fileID: 3888075289088131365, guid: f5495d2889450ae41a225cf9c6e0d198, type: 3}
+  YellowGem: {fileID: 950635419605738633, guid: e0b04bed6958ebf499c95e73de8932a1, type: 3}
+  PinkGem: {fileID: 6970907792455268899, guid: afd92fe3ee59f6741aa5652aa0728e68, type: 3}
+  floatGridSize: {x: 1, y: 0.1, z: 1}
+  minSpawnDelay: 1
+  maxSpawnDelay: 5
+  N: 3
+  M: 4
