@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
 
     private bool isWalking;
     private bool isMovingToKuyumcu = false;
-    public bool isRegenerating = false;
+    //public bool isRegenerating = false;
 
 
     public Transform player;

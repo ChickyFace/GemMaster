@@ -5,6 +5,7 @@ using UnityEngine.Device;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using TMPro;
+using Unity.VisualScripting;
 
 public class IdleManager : MonoBehaviour
 {
@@ -69,6 +70,7 @@ public class IdleManager : MonoBehaviour
 
 
     public static IdleManager instance;
+    private bool isCounting = false;
 
 
 
@@ -118,49 +120,168 @@ public class IdleManager : MonoBehaviour
 
 
     }
-     public void SetGemData(int gemLayerIndex, float xScaleOfInitialGem)
-     {
-        GemLayerIndex = gemLayerIndex;
+     
+
+    private List<GemData> gatheredGems = new List<GemData>();
+
+    // Define a custom class to hold gem data
+    private class GemData
+    {
+    public int gemLayerIndex;
+    public float xScaleOfInitialGem;
+
+    public GemData(int layerIndex, float scale)
+    {
+            gemLayerIndex = layerIndex;
+            xScaleOfInitialGem = scale;
+    }
+    }
+    public void SetGemData(int gemLayerIndex, float xScaleOfInitialGem)
+    {
+        // Create a new instance of GemData and add it to the list
+
+        GemData gemData = new GemData(gemLayerIndex, xScaleOfInitialGem);
+        gatheredGems.Add(gemData);
         
-        XScaleOfInitialGem = xScaleOfInitialGem;
+        //GemLayerIndex = gemLayerIndex;
+
+        //XScaleOfInitialGem = xScaleOfInitialGem;
 
     }
 
-
-public void GetGemMoneyAndCount()
-{
-
-
-
-    // Use GemLayerIndex and XScaleOfInitialGem properties here
-    if (GemLayerIndex == LayerMask.NameToLayer("Pink"))
+    private IEnumerator ProcessGatheredGems()
     {
+        if (isCounting)
+        {
+            // Coroutine is already running, do nothing
+            yield break;
+        }
 
-        _pinkGemCount++;
-        wallet += (XScaleOfInitialGem * 100 + initialPinkGemCost);
-        PlayerPrefs.SetFloat("Wallet", wallet);
-        PlayerPrefs.SetInt("PinkGemCount", _pinkGemCount);
+        isCounting = true;
+
+        int a = gatheredGems.Count;
+
+        
+        for (int i = a - 1; i >= 0; i--)
+        {
+
+            if (!isCounting)
+            {
+                // Loop is interrupted, store the current loop index and exit the coroutine
+                a = i + 1;
+                yield break;
+            }
+
+            var gemData = gatheredGems[i];
+            int gemLayerIndex = gemData.gemLayerIndex;
+            float xScaleOfInitialGem = gemData.xScaleOfInitialGem;
+            
+            if (gemLayerIndex == LayerMask.NameToLayer("Pink"))
+            {
+                _pinkGemCount++;
+                wallet += (xScaleOfInitialGem * 100 + initialPinkGemCost);
+                PlayerPrefs.SetFloat("Wallet", wallet);
+                PlayerPrefs.SetInt("PinkGemCount", _pinkGemCount);
+            }
+            else if (gemLayerIndex == LayerMask.NameToLayer("Green"))
+            {
+                _greenGemCount++;
+                wallet += (xScaleOfInitialGem * 100 + initialGreenGemCost);
+                PlayerPrefs.SetFloat("Wallet", wallet);
+                PlayerPrefs.SetInt("GreenGemCount", _greenGemCount);
+            }
+            else if (gemLayerIndex == LayerMask.NameToLayer("Yellow"))
+            {
+                _yellowGemCount++;
+                wallet += (xScaleOfInitialGem * 100 + initialYellowGemCost);
+                PlayerPrefs.SetFloat("Wallet", wallet);
+                PlayerPrefs.SetInt("YellowGemCount", _yellowGemCount);
+            }
+
+            gatheredGems.RemoveAt(i);
+            yield return new WaitForSeconds(0.2f);
+
+
+        }
     }
-    else if (GemLayerIndex == LayerMask.NameToLayer("Green"))
+
+    public void GetGemMoneyAndCount()
     {
-        _greenGemCount++;
-        wallet += (XScaleOfInitialGem * 100 + initialGreenGemCost);
-        PlayerPrefs.SetFloat("Wallet", wallet);
-        PlayerPrefs.SetInt("GreenGemCount", _greenGemCount);
-    }
-    else if (GemLayerIndex == LayerMask.NameToLayer("Yellow"))
-    {
-        _yellowGemCount++;
-        wallet += (XScaleOfInitialGem * 100 + initialYellowGemCost);
-        PlayerPrefs.SetFloat("Wallet", wallet);
-        PlayerPrefs.SetInt("YellowGemCount", _yellowGemCount);
+       StartCoroutine(ProcessGatheredGems());
+        UpdateTexts();
     }
 
+    //public void GetGemMoneyAndCount()
+    //{
+    //    foreach (var gemData in gatheredGems)
+    //    {
+    //        int gemLayerIndex = gemData.gemLayerIndex;
+    //        float xScaleOfInitialGem = gemData.xScaleOfInitialGem;
+
+    //        if (gemLayerIndex == LayerMask.NameToLayer("Pink"))
+    //        {
+    //            _pinkGemCount++;
+    //            wallet += (xScaleOfInitialGem * 100 + initialPinkGemCost);
+    //            PlayerPrefs.SetFloat("Wallet", wallet);
+    //            PlayerPrefs.SetInt("PinkGemCount", _pinkGemCount);
+    //        }
+    //        else if (gemLayerIndex == LayerMask.NameToLayer("Green"))
+    //        {
+    //            _greenGemCount++;
+    //            wallet += (xScaleOfInitialGem * 100 + initialGreenGemCost);
+    //            PlayerPrefs.SetFloat("Wallet", wallet);
+    //            PlayerPrefs.SetInt("GreenGemCount", _greenGemCount);
+    //        }
+    //        else if (gemLayerIndex == LayerMask.NameToLayer("Yellow"))
+    //        {
+    //            _yellowGemCount++;
+    //            wallet += (xScaleOfInitialGem * 100 + initialYellowGemCost);
+    //            PlayerPrefs.SetFloat("Wallet", wallet);
+    //            PlayerPrefs.SetInt("YellowGemCount", _yellowGemCount);
+    //        }
+    //    }
+
+    //    // Clear the list after processing all the gathered gem data
+    //    gatheredGems.Clear();
+
+    //    UpdateTexts();
+    //}
+
+
+    //    public void GetGemMoneyAndCount()
+    //{
 
 
 
-    UpdateTexts();
-}
+    //    // Use GemLayerIndex and XScaleOfInitialGem properties here
+    //    if (GemLayerIndex == LayerMask.NameToLayer("Pink"))
+    //    {
+
+    //        _pinkGemCount++;
+    //        wallet += (XScaleOfInitialGem * 100 + initialPinkGemCost);
+    //        PlayerPrefs.SetFloat("Wallet", wallet);
+    //        PlayerPrefs.SetInt("PinkGemCount", _pinkGemCount);
+    //    }
+    //    else if (GemLayerIndex == LayerMask.NameToLayer("Green"))
+    //    {
+    //        _greenGemCount++;
+    //        wallet += (XScaleOfInitialGem * 100 + initialGreenGemCost);
+    //        PlayerPrefs.SetFloat("Wallet", wallet);
+    //        PlayerPrefs.SetInt("GreenGemCount", _greenGemCount);
+    //    }
+    //    else if (GemLayerIndex == LayerMask.NameToLayer("Yellow"))
+    //    {
+    //        _yellowGemCount++;
+    //        wallet += (XScaleOfInitialGem * 100 + initialYellowGemCost);
+    //        PlayerPrefs.SetFloat("Wallet", wallet);
+    //        PlayerPrefs.SetInt("YellowGemCount", _yellowGemCount);
+    //    }
+
+
+
+
+    //    UpdateTexts();
+    //}
 
     /*
           //// Get the gem type based on the layer of the collided gem object
@@ -249,7 +370,7 @@ public void GetGemMoneyAndCount()
             //}*/
 
 
-    
+
 
 
 
