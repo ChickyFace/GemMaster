@@ -59,7 +59,7 @@ public class IdleManager : MonoBehaviour
 
     void Awake()
     {
-        // player = FindObjectOfType<Player>();
+        
 
         PlayerPrefs.DeleteAll();
         if (IdleManager.instance)
@@ -71,13 +71,14 @@ public class IdleManager : MonoBehaviour
 
 
         wallet = PlayerPrefs.GetFloat("Wallet", 0);
-        //xScaleOfInitialGem = PlayerPrefs.GetFloat("XScaleOfInitialGem", xScaleOfInitialGem);
+        
         _pinkGemCount = PlayerPrefs.GetInt("PinkGemCount", 0);
         _yellowGemCount = PlayerPrefs.GetInt("YellowGemCount", 0);
         _greenGemCount = PlayerPrefs.GetInt("GreenGemCount", 0);
        
 
     }
+
 
     public void GemPopUpActivate()
 
@@ -133,6 +134,7 @@ public class IdleManager : MonoBehaviour
     {
         if (isCounting)
         {
+
             // Coroutine is already running, do nothing
             yield break;
         }
@@ -149,6 +151,7 @@ public class IdleManager : MonoBehaviour
             {
                 // Loop is interrupted, store the current loop index and exit the coroutine
                 a = i + 1;
+
                 yield break;
             }
 
@@ -179,9 +182,9 @@ public class IdleManager : MonoBehaviour
             }
 
             gatheredGems.RemoveAt(i);
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.05f);
 
-
+            isCounting = false;
         }
     }
 
